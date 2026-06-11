@@ -147,10 +147,29 @@ offersContainer.appendChild(labelOffers);
 registerForm.appendChild(offersContainer);
 
 // --- Create account
-const createBtn = craftElement('button', 'create-btn', 'Create account');
-createBtn.type = 'submit';
+const submitBtn = craftElement('button', 'create-btn', 'Create account');
+submitBtn.type = 'submit';
 
-registerForm.appendChild(createBtn);
+registerForm.appendChild(submitBtn);
 container.appendChild(registerForm);
 
 document.body.appendChild(container);
+
+//--------------------------------------
+
+class Person {}
+
+registerForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const inputsData = registerForm.querySelectorAll('input[name]');
+    console.log(inputsData);
+
+    let userInputs = {};
+
+    inputsData.forEach((input) => {
+        if (input.name !== 'password' || input.name !== 'conf-password') {
+            userInputs[input.name] = input.value;
+        }
+    });
+});
