@@ -166,11 +166,10 @@ class Person {
     }
 }
 
-registerForm.addEventListener('submit', (event) => {
+submitBtn.addEventListener('click', (event) => {
     event.preventDefault();
 
     const inputsData = registerForm.querySelectorAll('input[name]');
-
     let userInputs = {};
 
     inputsData.forEach((input) => {
@@ -178,8 +177,8 @@ registerForm.addEventListener('submit', (event) => {
             userInputs[input.name] = input.value;
         }
     });
-    console.log(userInputs);
+
     const person = new Person(...Object.values(userInputs));
-    console.log(person);
+
     localStorage.setItem(person.lastName, JSON.stringify(person));
 });
