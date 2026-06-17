@@ -157,19 +157,29 @@ document.body.appendChild(container);
 
 //--------------------------------------
 
-class Person {}
+class Person {
+    constructor(firstName, nickName, lastName, email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nickName = nickName;
+        this.email = email;
+    }
+}
 
 registerForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const inputsData = registerForm.querySelectorAll('input[name]');
-    console.log(inputsData);
 
     let userInputs = {};
 
     inputsData.forEach((input) => {
-        if (input.name !== 'password' || input.name !== 'conf-password') {
+        if (input.name !== 'password' && input.name !== 'conf-password') {
             userInputs[input.name] = input.value;
         }
     });
+    console.log(userInputs);
+    const person = new Person(...Object.values(userInputs));
+    console.log(person);
+    localStorage.setItem(person.lastName, JSON.stringify(person));
 });
