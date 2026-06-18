@@ -52,6 +52,7 @@ container.appendChild(header);
 
 // ---- FORM -----
 const registerForm = craftElement('form');
+registerForm.novalidate = true;
 
 const formCols = craftElement('div', 'form-columns');
 const columnL = craftElement('div', 'column');
@@ -67,7 +68,11 @@ columnL.appendChild(displayName);
 columnL.appendChild(password);
 
 const lastName = craftInput('text', 'last-name', 'Last name');
+
+const emailWrapper = craftElement('div', 'email-box');
 const email = craftInput('email', 'email', 'Email Address');
+const emailError = craftElement('span', 'email-error');
+
 const passwordConf = craftInput(
     'password',
     'conf-password',
@@ -75,7 +80,11 @@ const passwordConf = craftInput(
 );
 
 columnR.appendChild(lastName);
-columnR.appendChild(email);
+
+emailWrapper.appendChild(email);
+emailWrapper.appendChild(emailError);
+columnR.appendChild(emailWrapper);
+
 columnR.appendChild(passwordConf);
 
 formCols.appendChild(columnL);
@@ -157,7 +166,7 @@ container.appendChild(registerForm);
 
 document.body.appendChild(container);
 
-//------------------------------------------------------
+//------------------------------COLLECT-PROPS-------------------------------
 
 submitBtn.addEventListener('click', (event) => {
     event.preventDefault();
@@ -174,4 +183,18 @@ submitBtn.addEventListener('click', (event) => {
     const person = new Person(...Object.values(userInputs));
 
     localStorage.setItem(person.lastName, JSON.stringify(person));
+});
+
+//-----------------------------EMAIL-VALIDATION---------------------------
+email.addEventListener('input', (event) => {
+    const userEmail = email.value;
+    console.log(userEmail);
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (emailPattern.test(userEmail) || userEmail === '') {
+        emailError.style.display = 'none';
+    } else {
+        emailError.textContent = 'Valid format: example@domain.com';
+        emailError.style.display = 'inline-block';
+    }
 });
