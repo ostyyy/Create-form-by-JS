@@ -1,3 +1,5 @@
+import { Person } from './person.js';
+
 const body = document.body;
 
 function craftElement(tagName, className = '', content = '') {
@@ -155,16 +157,7 @@ container.appendChild(registerForm);
 
 document.body.appendChild(container);
 
-//--------------------------------------
-
-class Person {
-    constructor(firstName, nickName, lastName, email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.nickName = nickName;
-        this.email = email;
-    }
-}
+//------------------------------------------------------
 
 submitBtn.addEventListener('click', (event) => {
     event.preventDefault();
@@ -179,6 +172,7 @@ submitBtn.addEventListener('click', (event) => {
     });
 
     const person = new Person(...Object.values(userInputs));
+    console.log("Створений об'єкт користувача:", person);
 
     localStorage.setItem(person.lastName, JSON.stringify(person));
 });
