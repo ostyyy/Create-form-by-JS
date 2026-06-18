@@ -172,7 +172,6 @@ submitBtn.addEventListener('click', (event) => {
     });
 
     const person = new Person(...Object.values(userInputs));
-    console.log("Створений об'єкт користувача:", person);
 
     localStorage.setItem(person.lastName, JSON.stringify(person));
 });
