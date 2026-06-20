@@ -61,23 +61,31 @@ const columnR = craftElement('div', 'column');
 // ---> inputs
 const firstName = craftInput('text', 'first-name', 'First name');
 const displayName = craftInput('text', 'display-name', 'Display name');
+
+const passwordWrapper = craftElement('div', 'input-box');
 const password = craftInput('password', 'password', 'Password');
+const pswError = craftElement('span', 'input-error');
 
 columnL.appendChild(firstName);
 columnL.appendChild(displayName);
-columnL.appendChild(password);
+
+passwordWrapper.appendChild(password);
+passwordWrapper.appendChild(pswError);
+columnL.appendChild(passwordWrapper);
 
 const lastName = craftInput('text', 'last-name', 'Last name');
 
-const emailWrapper = craftElement('div', 'email-box');
+const emailWrapper = craftElement('div', 'input-box');
 const email = craftInput('email', 'email', 'Email Address');
-const emailError = craftElement('span', 'email-error');
+const emailError = craftElement('span', 'input-error');
 
+const pswConfWrapper = craftElement('div', 'input-box');
 const passwordConf = craftInput(
     'password',
     'conf-password',
     'Password Confirmation',
 );
+const pswConfError = craftElement('span', 'input-error');
 
 columnR.appendChild(lastName);
 
@@ -85,7 +93,9 @@ emailWrapper.appendChild(email);
 emailWrapper.appendChild(emailError);
 columnR.appendChild(emailWrapper);
 
-columnR.appendChild(passwordConf);
+pswConfWrapper.appendChild(passwordConf);
+pswConfWrapper.appendChild(pswConfError);
+columnR.appendChild(pswConfWrapper);
 
 formCols.appendChild(columnL);
 formCols.appendChild(columnR);
@@ -200,3 +210,33 @@ email.addEventListener('change', (event) => {
         submitBtn.disabled = true;
     }
 });
+
+//-----------------------------PASSWORD-VALIDATION---------------------------
+function passwordValidation() {
+    const userPsw = password.value;
+    const confirmedPsw = passwordConf.value;
+
+    if (userPsw.length < 8) {
+        pswError.textContent = 'Password must contain at least 8 characters!';
+        pswError.style.display = 'inline-block';
+        submitBtn.disabled = true;
+    } else {
+        pswError.style.display = 'none';
+
+        if (confirmedPsw === userPsw) {
+            pswConfError.style.display = 'none';
+            submitBtn.disabled = false;
+        } else {
+            submitBtn.disabled = true;
+            if (confirmedPsw !== '') {
+                pswConfError.textContent = 'Password do not match!';
+                pswConfError.style.display = 'inline-block';
+            } else {
+                pswConfError.style.display = 'none';
+            }
+        }
+    }
+}
+
+password.addEventListener('change', passwordValidation);
+passwordConf.addEventListener('change', passwordValidation);
