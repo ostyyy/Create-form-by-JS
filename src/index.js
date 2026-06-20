@@ -163,15 +163,21 @@ submitBtn.addEventListener('click', (event) => {
     event.preventDefault();
 
     const inputsData = registerForm.querySelectorAll('input[name]');
-    let userInputs = {};
 
-    inputsData.forEach((input) => {
-        if (input.name !== 'password' && input.name !== 'conf-password') {
-            userInputs[input.name] = input.value;
-        }
-    });
+    const person = new Person(...inputsData);
 
-    const person = new Person(...Object.values(userInputs));
-
-    localStorage.setItem(person.lastName, JSON.stringify(person));
+    const storageKey = person['last-name'];
+    localStorage.setItem(
+        storageKey,
+        JSON.stringify(
+            person,
+            (key, value) => {
+                if (key === 'password' || key === 'conf-password') {
+                    return undefined;
+                }
+                return value;
+            },
+            2,
+        ),
+    );
 });
