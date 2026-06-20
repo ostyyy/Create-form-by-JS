@@ -148,3 +148,7 @@ h1 {
 .create-btn:hover {
     background-color: #28d2c0;
 }
+
+.create-btn:disabled {
+    background-color: #91d1fc94;
+}

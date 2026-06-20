@@ -186,15 +186,17 @@ submitBtn.addEventListener('click', (event) => {
 });
 
 //-----------------------------EMAIL-VALIDATION---------------------------
-email.addEventListener('input', (event) => {
-    const userEmail = email.value;
-    console.log(userEmail);
+email.addEventListener('change', (event) => {
+    const userEmail = event.target.value.trim();
+
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    if (emailPattern.test(userEmail) || userEmail === '') {
+    if (emailPattern.test(userEmail)) {
         emailError.style.display = 'none';
+        submitBtn.disabled = false;
     } else {
         emailError.textContent = 'Valid format: example@domain.com';
         emailError.style.display = 'inline-block';
+        submitBtn.disabled = true;
     }
 });
